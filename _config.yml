@@ -1,7 +1,10 @@
 title: WorrizitChin's Blog 『謹京的博客』
 description: 単純な 馬鹿でありたい。
 logo_img: /assets/img/icons/golasblog_logo.svg
+theme: jekyll-theme-simplex
 
+logo_img: /assets/img/icons/golasblog_logo.svg #Absolute path to the logo. If not specified, the title will be displayed instead.
+copyright: © Golasowski 2020 #Your copyright.
 
 sass:
     style: compressed
