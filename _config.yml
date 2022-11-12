@@ -1,6 +1,20 @@
-remote_theme: pages-themes/minimal@v0.2.0
-plugins:
-- jekyll-remote-theme # add this line to the plugins list if you already have one
-
 title: WorrizitChin's Blog 『謹京的博客』
 description: 単純な 馬鹿でありたい。
+logo_img: /assets/img/icons/golasblog_logo.svg
+
+sass:
+    style: compressed
+
+collections:
+    category:
+        output: true
+    authors:
+        output: false
+
+defaults:
+  -
+    scope:
+      path: ""
+      type: category
+    values:
+      layout: "category"
