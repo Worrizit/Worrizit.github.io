@@ -1,9 +1,10 @@
-title: WorrizitChin's Blog 『謹京的博客』
-description: 単純な 馬鹿でありたい。
-logo_img: /assets/img/icons/yuuko.jpg
+title: 常憂堂
+lang: zh
+description: 謹京的博客。
+logo_img: /assets/img/icons/yuuko.svg
 theme: jekyll-theme-simplex
 
-logo_img: /assets/img/icons/yuuko.jpg
+logo_img: /assets/img/icons/yuuko.svg
 copyright: © 2022 by 謹京@常憂堂
 
 sass:
@@ -22,3 +23,11 @@ defaults:
       type: category
     values:
       layout: "category"
+      
+nav:
+ - name: 首頁
+   link: /
+ - name: 發文
+   link: /blogpost/
+ - name: 文摘
+   link: /piece/
