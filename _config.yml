@@ -1,5 +1,7 @@
+
 title: 常憂堂
 lang: zh
 description: 謹京的博客。
 logo_img: /assets/img/icons/yuuko.svg
+remote_theme: andreondra/jekyll-theme-simplex
 theme: jekyll-theme-simplex
