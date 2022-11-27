@@ -12,6 +12,14 @@ Worrizit = worry(en) + ずっと(jp) = 常憂
 
 ## **發佈**   
 
+<ul>
+  {% for post in site.posts %}
+    <li>
+      <a href="{{ post.url }}">{{ post.title }}</a>
+    </li>
+  {% endfor %}
+</ul>
+
 ## **常用網址**
 * **百科**   
   [Infogalactic（銀百）](https://infogalactic.com/info/Main_Page)   
