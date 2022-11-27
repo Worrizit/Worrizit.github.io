@@ -9,3 +9,16 @@ highlighter: rouge
 markdown: kramdown
 kramdown:
   input: GFM
+copyright  : © 2022 by 謹京@常憂堂  
+
+nav:
+ - name: 詩
+   link: /poem/
+ - name: 隨筆
+   link: /essay/
+ - name: 音韻學
+   link: /chinese-phonetics/
+ - name: 語言學
+   link: /linguistics/
+ - name: 自娛自樂
+   link: /sjewh/
