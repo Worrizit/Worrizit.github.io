@@ -2,11 +2,9 @@
 layout: post
 title: 人造漢語方言不通話（YEC-EN-ʻUA）Rime輸入方案
 author: 謹京
-permalink: /article/
-tags: 不通話
-rime
-輸入方案
+permalink: /article/rimeYEQ.html
 ---
+
 # rime-YEC-EN-‘UA
 ### 不通話rime輸入法——『無用之用，方爲大用』
 
