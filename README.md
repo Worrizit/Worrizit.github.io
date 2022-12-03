@@ -8,8 +8,6 @@
 
 Worrizit = worry(en) + ずっと(jp) = 常憂
 
-## **隨筆**   
-
 ## **發佈**   
 
 <ul>
@@ -25,16 +23,19 @@ Worrizit = worry(en) + ずっと(jp) = 常憂
   [Infogalactic（銀百）](https://infogalactic.com/info/Main_Page)   
   [AtoZ Wiki](https://atozwiki.com/)   
   [Unicode字符百科](https://unicode-table.com/en/)   
-* **音韻學&方言學**   
+* **音韻學&方言學&語言學**   
   [韻典網](https://ytenx.org/)   
   [切韻音系自動推導器](https://nk2028.shn.hk/qieyun-autoderiver/)    
   [音韻地位查詢器](https://nk2028.shn.hk/qieyun-tools/)   
   [粵音資料集叢](https://jyut.net/)   
   [字統網](https://zi.tools/)   
   [古今文字集成](http://ccamc.org/)   
-* **語言學**   
   [Omniglot](https://omniglot.com/)   
   [The International Phonetic Alphabet - Audio Illustrations](http://web.uvic.ca/ling/resources/ipa/charts/IPAlab/IPAlab.htm)   
+  [GlyphWiki](http://en.glyphwiki.org/wiki/GlyphWiki:MainPage)   
+  [The World Atlas of Language Structures (WALS)](https://wals.info)
+  [Glottolog 4.6](https://glottolog.org/)
+  
 
 
 
