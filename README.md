@@ -38,7 +38,7 @@ Worrizit = worry(en) + ずっと(jp) = 常憂
   [Glottolog 4.6](https://glottolog.org/)
   [Linguifex](https://linguifex.com/wiki/Main_Page)
   [Annotated Swadesh wordlists](https://starlingdb.org/cgi-bin/main.cgi?root=new100)
-* **明日方舟**
+* **明日方舟**  
   [PRTS](https://prts.wiki/w/%E9%A6%96%E9%A1%B5)
   [企鵝物流數據統計](https://penguin-stats.io/)
 * **Github/Gitee倉庫**
