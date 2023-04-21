@@ -34,9 +34,9 @@ Worrizit = worry(en) + ずっと(jp) = 常憂
   [Omniglot](https://omniglot.com/)   
   [The International Phonetic Alphabet - Audio Illustrations](http://web.uvic.ca/ling/resources/ipa/charts/IPAlab/IPAlab.htm)   
   [GlyphWiki](http://en.glyphwiki.org/wiki/GlyphWiki:MainPage)   
-  [The World Atlas of Language Structures (WALS)](https://wals.info)
-  [Glottolog 4.6](https://glottolog.org/)
-  [Linguifex](https://linguifex.com/wiki/Main_Page)
+  [The World Atlas of Language Structures (WALS)](https://wals.info)  
+  [Glottolog 4.6](https://glottolog.org/)  
+  [Linguifex](https://linguifex.com/wiki/Main_Page)  
   [Annotated Swadesh wordlists](https://starlingdb.org/cgi-bin/main.cgi?root=new100)
 * **明日方舟**  
   [PRTS](https://prts.wiki/w/%E9%A6%96%E9%A1%B5)  
