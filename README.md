@@ -18,6 +18,10 @@ Worrizit = worry(en) + ずっと(jp) = 常憂
   {% endfor %}
 </ul>
 
+## **文件**   
+* **epub**
+  [《现代汉语语法研究教程》](https://gitee.com/Worrizit/Worrizit.github.io/raw/main/assets/epub/%E7%8E%B0%E4%BB%A3%E6%B1%89%E8%AF%AD%E8%AF%AD%E6%B3%95%E7%A0%94%E7%A9%B6%E6%95%99%E7%A8%8B%20%5B%E4%B9%A6%E4%BA%91%20openelib.org%5D-fb9b.epub)
+
 ## **常用網址**
 * **百科**   
   [Infogalactic（銀百）](https://infogalactic.com/info/Main_Page)   
