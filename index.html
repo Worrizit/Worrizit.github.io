@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>常憂堂|謹京的博客</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --light-gray: #f5f5f5;
+            --medium-gray: #e0e0e0;
+            --dark-gray: #333333;
+            --text-gray: #555555;
+            --text-light: #777777;
+            --accent-gray: #444444;
+            --border-gray: #d0d0d0;
+            --table-header: #f0f0f0;
+            --table-row: #f8f8f8;
+            --table-hover: #e8e8e8;
+            --link-gray: #4a4a4a;
+            --link-hover: #222222;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f0f0f0 0%, #e5e5e5 100%);
+            color: var(--dark-gray);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 30px;
+        }
+        
+        header {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-gray);
+        }
+        
+        header h1 {
+            font-size: 2.8rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            color: var(--dark-gray);
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+        
+        /* 左侧文章区域 */
+        .articles-section {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            padding: 25px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+            border: 1px solid var(--border-gray);
+        }
+        
+        .articles-section h2 {
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            color: var(--dark-gray);
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-gray);
+            display: flex;
+            align-items: center;
+            font-weight: 400;
+        }
+        
+        .articles-section h2 i {
+            margin-right: 12px;
+            color: var(--text-light);
+        }
+        
+        .article-list {
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .article-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .article-list::-webkit-scrollbar-track {
+            background: var(--light-gray);
+            border-radius: 4px;
+        }
+        
+        .article-list::-webkit-scrollbar-thumb {
+            background: var(--text-light);
+            border-radius: 4px;
+        }
+        
+        .article-item {
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 6px;
+            background: var(--table-row);
+            transition: all 0.3s;
+            border-left: 3px solid var(--accent-gray);
+        }
+        
+        .article-item:hover {
+            background: var(--table-hover);
+            transform: translateX(5px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .article-item h3 {
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+            color: var(--dark-gray);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-weight: 500;
+        }
+        
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+        
+        .article-item a {
+            color: var(--dark-gray);
+            text-decoration: none;
+            display: block;
+        }
+        
+        /* 文件管理器区域 - 列表样式 */
+        .file-manager {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            padding: 25px;
+            border: 1px solid var(--border-gray);
+        }
+        
+        .fm-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .fm-header h2 {
+            font-size: 1.6rem;
+            color: var(--dark-gray);
+            font-weight: 400;
+        }
+        
+        .fm-header h2 i {
+            margin-right: 10px;
+            color: var(--text-light);
+        }
+        
+        .controls {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .search-box {
+            position: relative;
+        }
+        
+        .search-box input {
+            padding: 12px 15px 12px 40px;
+            border: 1px solid var(--border-gray);
+            border-radius: 30px;
+            width: 250px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: var(--light-gray);
+            color: var(--dark-gray);
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--text-light);
+            box-shadow: 0 0 0 2px rgba(100, 100, 100, 0.1);
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+        
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding: 12px 15px;
+            background: var(--light-gray);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        
+        .breadcrumb a {
+            color: var(--link-gray);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .breadcrumb a:hover {
+            color: var(--link-hover);
+            text-decoration: underline;
+        }
+        
+        .breadcrumb span {
+            margin: 0 10px;
+        }
+        
+        /* 文件列表表格样式 */
+        .file-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            border: 1px solid var(--border-gray);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .file-table thead {
+            background: var(--table-header);
+        }
+        
+        .file-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 500;
+            color: var(--dark-gray);
+            border-bottom: 1px solid var(--border-gray);
+        }
+        
+        .file-table td {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-gray);
+            color: var(--text-gray);
+        }
+        
+        .file-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .file-table tr:hover {
+            background-color: var(--table-hover);
+        }
+        
+        .file-icon-cell {
+            width: 40px;
+            text-align: center;
+        }
+        
+        .file-icon {
+            color: var(--text-light);
+            font-size: 1.2rem;
+        }
+        
+        .file-name {
+            font-weight: 500;
+            color: var(--dark-gray);
+        }
+        
+        .file-size, .file-date {
+            font-size: 0.9rem;
+        }
+        
+        .file-action a {
+            color: var(--link-gray);
+            text-decoration: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            transition: all 0.3s;
+            border: 1px solid var(--border-gray);
+            font-size: 0.9rem;
+        }
+        
+        .file-action a:hover {
+            background: var(--table-header);
+            color: var(--link-hover);
+        }
+        
+        .directory-row td {
+            font-weight: 500;
+        }
+        
+        .directory-row .file-icon {
+            color: var(--text-light);
+        }
+        
+        /* README 显示区域 */
+        .readme-section {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            padding: 25px;
+            border: 1px solid var(--border-gray);
+        }
+        
+        .readme-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-gray);
+        }
+        
+        .readme-header h2 {
+            font-size: 1.6rem;
+            color: var(--dark-gray);
+            font-weight: 400;
+        }
+        
+        .readme-header i {
+            margin-right: 12px;
+            font-size: 1.4rem;
+            color: var(--text-light);
+        }
+        
+        .readme-content {
+            padding: 20px;
+            background: var(--light-gray);
+            border-radius: 6px;
+            line-height: 1.8;
+            color: var(--text-gray);
+            border: 1px solid var(--border-gray);
+        }
+        
+        .readme-content h3 {
+            color: var(--dark-gray);
+            margin: 20px 0 10px;
+            font-weight: 500;
+        }
+        
+        .readme-content p {
+            margin-bottom: 15px;
+        }
+        
+        .readme-content code {
+            background: var(--table-row);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            border: 1px solid var(--border-gray);
+            color: var(--dark-gray);
+        }
+        
+        .readme-content pre {
+            background: var(--dark-gray);
+            color: var(--light-gray);
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 15px 0;
+            border: 1px solid var(--border-gray);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .articles-section {
+                position: static;
+            }
+            
+            .search-box input {
+                width: 200px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .file-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .controls {
+                width: 100%;
+            }
+            
+            .search-box {
+                flex-grow: 1;
+            }
+            
+            .search-box input {
+                width: 100%;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .file-table th, .file-table td {
+                padding: 12px 8px;
+                font-size: 0.9rem;
+            }
+            
+            .article-item {
+                padding: 12px;
+            }
+            
+            .article-item h3 {
+                font-size: 1rem;
+            }
+        }
+        
+        footer {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 40px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-gray);
+        }
+        
+        footer a {
+            color: var(--link-gray);
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .loading {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            color: var(--text-light);
+            font-size: 1.2rem;
+        }
+        
+        .loading i {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--text-light);
+            animation: spin 1.5s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            grid-column: 1 / -1;
+            background: var(--light-gray);
+            color: var(--dark-gray);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+            border: 1px solid var(--border-gray);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>常憂堂|謹京的博客</h1>
+            <p>面朝大海，春暖花開</p>
+        </header>
+        
+        <!-- 左侧文章区域 -->
+        <aside class="articles-section">
+            <h2><i class="fas fa-newspaper"></i> 最新稿件</h2>
+            <div class="article-list" id="article-list">
+                <div class="article-item">
+                    <i class="fas fa-spinner fa-spin"></i> 加載稿件列表
+                </div>
+            </div>
+        </aside>
+        
+        <!-- 文件管理器区域 -->
+        <main class="file-manager">
+            <div class="fm-header">
+                <h2><i class="fas fa-folder-open"></i> 文件管理器</h2>
+                <div class="controls">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="search-input" placeholder="搜索文件...">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="breadcrumb">
+                <a href="#" id="root-link">主頁</a>
+                <span>/</span>
+                <div id="current-dir">assets</div>
+            </div>
+            
+            <div class="file-table-container">
+                <table class="file-table">
+                    <thead>
+                        <tr>
+                            <th class="file-icon-cell"></th>
+                            <th>名稱</th>
+                            <th>大小</th>
+                            <th>修改日期</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="file-table-body">
+                        <tr>
+                            <td colspan="5" style="text-align: center;">
+                                <div class="loading">
+                                    <i class="fas fa-spinner"></i>
+                                    <p>正在加載文件列表...</p>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- README 显示区域 -->
+            <div class="readme-section">
+                <div class="readme-header">
+                    <i class="fab fa-readme"></i>
+                    <h2>README.md</h2>
+                </div>
+                <div class="readme-content" id="readme-content">
+                    <p>正在加載 README.md 内容...</p>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>© 2023 常憂堂 | 托管于 <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></p>
+            <p>訪問地址: <a href="https://worrizit.github.io" target="_blank">worrizit.github.io</a></p>
+        </footer>
+    </div>
+
+    <script>
+        // 文件类型映射
+        const fileTypeMap = {
+            // 图片
+            'png': { icon: 'fas fa-image' },
+            'jpg': { icon: 'fas fa-image' },
+            'jpeg': { icon: 'fas fa-image' },
+            'gif': { icon: 'fas fa-image' },
+            'svg': { icon: 'fas fa-image' },
+            'webp': { icon: 'fas fa-image' },
+            
+            // 文档
+            'pdf': { icon: 'fas fa-file-pdf' },
+            'doc': { icon: 'fas fa-file-word' },
+            'docx': { icon: 'fas fa-file-word' },
+            'xls': { icon: 'fas fa-file-excel' },
+            'xlsx': { icon: 'fas fa-file-excel' },
+            'ppt': { icon: 'fas fa-file-powerpoint' },
+            'pptx': { icon: 'fas fa-file-powerpoint' },
+            'txt': { icon: 'fas fa-file-alt' },
+            
+            // 文章
+            'md': { icon: 'fab fa-markdown' },
+            
+            // 代码
+            'html': { icon: 'fab fa-html5' },
+            'css': { icon: 'fab fa-css3-alt' },
+            'js': { icon: 'fab fa-js-square' },
+            'json': { icon: 'fas fa-file-code' },
+            'yml': { icon: 'fas fa-file-code' },
+            'yaml': { icon: 'fas fa-file-code' },
+            
+            // 压缩文件
+            'zip': { icon: 'fas fa-file-archive' },
+            'rar': { icon: 'fas fa-file-archive' },
+            'tar': { icon: 'fas fa-file-archive' },
+            'gz': { icon: 'fas fa-file-archive' },
+            
+            // 目录
+            'dir': { icon: 'fas fa-folder' },
+            
+            // 默认类型
+            'default': { icon: 'fas fa-file' }
+        };
+
+        // 当前目录状态
+        let currentDirectory = 'assets';
+        
+        // 获取文件类型信息
+        function getFileTypeInfo(filename, isDirectory = false) {
+            if (isDirectory) return fileTypeMap['dir'];
+            
+            const extension = filename.split('.').pop().toLowerCase();
+            return fileTypeMap[extension] || fileTypeMap['default'];
+        }
+
+        // 格式化文件大小
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // 格式化日期
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('zh-CN', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // 渲染文件列表
+        function renderFileList(files) {
+            const tbody = document.getElementById('file-table-body');
+            tbody.innerHTML = '';
+            
+            // 添加返回上级目录行
+            if (currentDirectory !== 'assets') {
+                const backRow = document.createElement('tr');
+                backRow.className = 'directory-row';
+                backRow.innerHTML = `
+                    <td class="file-icon-cell"><i class="fas fa-level-up-alt"></i></td>
+                    <td class="file-name" colspan="4">
+                        <a href="#" id="back-link">返回上级目录</a>
+                    </td>
+                `;
+                tbody.appendChild(backRow);
+                
+                // 添加返回事件
+                backRow.querySelector('#back-link').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    goBack();
+                });
+            }
+            
+            if (files.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td colspan="5" style="text-align: center; padding: 30px; color: var(--text-light);">
+                        <i class="fas fa-folder-open"></i>
+                        <p>该目录下没有文件</p>
+                    </td>
+                `;
+                tbody.appendChild(row);
+                return;
+            }
+            
+            files.forEach(file => {
+                const isDirectory = file.type === 'dir';
+                const fileType = getFileTypeInfo(file.name, isDirectory);
+                
+                const row = document.createElement('tr');
+                row.className = isDirectory ? 'directory-row' : '';
+                row.innerHTML = `
+                    <td class="file-icon-cell"><i class="${fileType.icon}"></i></td>
+                    <td class="file-name">${file.name}</td>
+                    <td class="file-size">${isDirectory ? '目录' : formatFileSize(file.size)}</td>
+                    <td class="file-date">${isDirectory ? '-' : formatDate(file.date)}</td>
+                    <td class="file-action">
+                        ${isDirectory ? 
+                            '<a href="#" class="open-dir">打开</a>' : 
+                            '<a href="#" class="download-file">下载</a>'}
+                    </td>
+                `;
+                
+                // 添加事件处理
+                if (isDirectory) {
+                    row.querySelector('.open-dir').addEventListener('click', (e) => {
+                        e.preventDefault();
+                        navigateToDirectory(file.path);
+                    });
+                } else {
+                    row.querySelector('.download-file').addEventListener('click', (e) => {
+                        e.preventDefault();
+                        downloadFile(file);
+                    });
+                }
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        // 下载文件函数
+        function downloadFile(file) {
+            // 使用GitHub Pages的URL
+            const fileUrl = `https://worrizit.github.io/${file.path}`;
+            
+            // 创建临时链接下载文件
+            const a = document.createElement('a');
+            a.href = fileUrl;
+            a.download = file.name;
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        // 导航到目录
+        function navigateToDirectory(path) {
+            currentDirectory = path;
+            fetchRepoContents();
+        }
+
+        // 返回上一级目录
+        function goBack() {
+            const parts = currentDirectory.split('/');
+            parts.pop(); // 移除最后一部分
+            currentDirectory = parts.join('/') || 'assets';
+            fetchRepoContents();
+        }
+
+        // 获取仓库内容
+        async function fetchRepoContents() {
+            // 显示加载状态
+            document.getElementById('file-table-body').innerHTML = `
+                <tr>
+                    <td colspan="5" style="text-align: center; padding: 30px;">
+                        <div class="loading">
+                            <i class="fas fa-spinner"></i>
+                            <p>正在加载文件列表...</p>
+                        </div>
+                    </td>
+                </tr>
+            `;
+            
+            // 更新面包屑导航
+            document.getElementById('current-dir').textContent = currentDirectory;
+            
+            try {
+                // GitHub API URL
+                const apiUrl = `https://api.github.com/repos/worrizit/worrizit.github.io/contents/${currentDirectory}`;
+                
+                // 调用GitHub API
+                const response = await fetch(apiUrl);
+                
+                if (!response.ok) {
+                    throw new Error(`GitHub API請求失敗: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                // 处理API返回的数据
+                const files = data.map(item => ({
+                    name: item.name,
+                    path: item.path,
+                    size: item.size || 0,
+                    date: item.type === 'dir' ? '' : item.git_url, // 对于目录，日期留空
+                    type: item.type,
+                    download_url: item.download_url
+                }));
+                
+                // 渲染文件列表
+                renderFileList(files);
+                
+            } catch (error) {
+                console.error('加载文件时出错:', error);
+                document.getElementById('file-table-body').innerHTML = `
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 30px; color: var(--dark-gray);">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p>无法加载文件列表: ${error.message}</p>
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        // 获取文章列表
+        async function fetchArticles() {
+            const articleList = document.getElementById('article-list');
+            articleList.innerHTML = `
+                <div class="article-item">
+                    <i class="fas fa-spinner fa-spin"></i> 正在加載稿件列表...
+                </div>
+            `;
+            
+            try {
+                // GitHub API URL
+                const apiUrl = 'https://api.github.com/repos/worrizit/worrizit.github.io/contents/_posts';
+                
+                // 调用GitHub API
+                const response = await fetch(apiUrl);
+                
+                if (!response.ok) {
+                    throw new Error(`GitHub API請求失敗: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                // 只取前5篇文章
+                const articles = data.slice(0, 5);
+                
+                // 清空文章列表
+                articleList.innerHTML = '';
+                
+                // 渲染文章列表
+                articles.forEach(async (article) => {
+                    if (article.name.endsWith('.md')) {
+                        // 获取文章内容
+                        const contentResponse = await fetch(article.download_url);
+                        const content = await contentResponse.text();
+                        
+                        // 从Markdown中提取标题
+                        const titleMatch = content.match(/title:\s*["']?(.*?)["']?\s*[\r\n]/i);
+                        const title = titleMatch ? titleMatch[1] : article.name.replace('.md', '');
+                        
+                        // 提取日期（假设文件名中有日期）
+                        const dateMatch = article.name.match(/(\d{4}-\d{2}-\d{2})/);
+                        const date = dateMatch ? dateMatch[1] : '';
+                        
+                        // 创建文章项
+                        const articleItem = document.createElement('div');
+                        articleItem.className = 'article-item';
+                        articleItem.innerHTML = `
+                            <a href="https://worrizit.github.io/${article.path.replace('.md', '')}" target="_blank">
+                                <h3>${title}</h3>
+                                <div class="article-meta">
+                                    <span>${date}</span>
+                                    <span>${formatFileSize(article.size)}</span>
+                                </div>
+                            </a>
+                        `;
+                        articleList.appendChild(articleItem);
+                    }
+                });
+                
+            } catch (error) {
+                console.error('加載稿件時出錯:', error);
+                articleList.innerHTML = `
+                    <div class="article-item">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>無法加載稿件列表: ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // 获取并渲染README.md
+        async function fetchReadme() {
+            const readmeContent = document.getElementById('readme-content');
+            readmeContent.innerHTML = '<p><i class="fas fa-spinner fa-spin"></i> 正在加載README.md...</p>';
+            
+            try {
+                // GitHub API URL
+                const apiUrl = 'https://api.github.com/repos/worrizit/worrizit.github.io/contents/README.md';
+                
+                // 调用GitHub API
+                const response = await fetch(apiUrl);
+                
+                if (!response.ok) {
+                    throw new Error(`GitHub API請求失敗: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                // 获取README内容
+                const readmeResponse = await fetch(data.download_url);
+                const readmeText = await readmeResponse.text();
+                
+                // 使用Marked.js渲染Markdown
+                readmeContent.innerHTML = marked.parse(readmeText);
+                
+            } catch (error) {
+                console.error('加載README時出錯:', error);
+                readmeContent.innerHTML = `
+                    <div class="error-message">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>無法加載README.md: ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            // 初始化获取文件列表（assets目录）
+            fetchRepoContents();
+            
+            // 获取文章列表
+            fetchArticles();
+            
+            // 获取README.md
+            fetchReadme();
+            
+            // 根目录链接事件
+            document.getElementById('root-link').addEventListener('click', (e) => {
+                e.preventDefault();
+                currentDirectory = 'assets';
+                fetchRepoContents();
+            });
+            
+            // 搜索功能
+            const searchInput = document.getElementById('search-input');
+            searchInput.addEventListener('input', function() {
+                const query = this.value.toLowerCase();
+                const rows = document.querySelectorAll('#file-table-body tr');
+                
+                rows.forEach(row => {
+                    if (row.querySelector('.file-name')) {
+                        const fileName = row.querySelector('.file-name').textContent.toLowerCase();
+                        if (fileName.includes(query)) {
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
