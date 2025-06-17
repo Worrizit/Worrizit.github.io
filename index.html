@@ -27,6 +27,7 @@
             --table-hover: #e8e8e8;
             --link-gray: #4a4a4a;
             --link-hover: #222222;
+            --preview-bg: #f9f9f9;
         }
         
         body {
@@ -69,7 +70,7 @@
             font-weight: 300;
         }
         
-        /* 左侧文章区域 */
+        /* 左侧稿件区域 */
         .articles-section {
             background: white;
             border-radius: 8px;
@@ -94,6 +95,29 @@
         
         .articles-section h2 i {
             margin-right: 12px;
+            color: var(--text-light);
+        }
+        
+        .article-search {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .article-search input {
+            width: 100%;
+            padding: 12px 15px 12px 40px;
+            border: 1px solid var(--border-gray);
+            border-radius: 30px;
+            font-size: 1rem;
+            background: var(--light-gray);
+            color: var(--dark-gray);
+        }
+        
+        .article-search i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
             color: var(--text-light);
         }
         
@@ -124,12 +148,18 @@
             background: var(--table-row);
             transition: all 0.3s;
             border-left: 3px solid var(--accent-gray);
+            cursor: pointer;
         }
         
         .article-item:hover {
             background: var(--table-hover);
             transform: translateX(5px);
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .article-item.active {
+            background: var(--table-hover);
+            border-left: 3px solid var(--dark-gray);
         }
         
         .article-item h3 {
@@ -147,12 +177,6 @@
             justify-content: space-between;
             font-size: 0.85rem;
             color: var(--text-light);
-        }
-        
-        .article-item a {
-            color: var(--dark-gray);
-            text-decoration: none;
-            display: block;
         }
         
         /* 文件管理器区域 - 列表样式 */
@@ -322,8 +346,8 @@
             color: var(--text-light);
         }
         
-        /* README 显示区域 */
-        .readme-section {
+        /* 预览显示区域 */
+        .preview-section {
             background: white;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
@@ -331,46 +355,70 @@
             border: 1px solid var(--border-gray);
         }
         
-        .readme-header {
+        .preview-header {
             display: flex;
             align-items: center;
+            justify-content: space-between;
             margin-bottom: 20px;
             padding-bottom: 15px;
             border-bottom: 1px solid var(--border-gray);
         }
         
-        .readme-header h2 {
+        .preview-title {
+            display: flex;
+            align-items: center;
+        }
+        
+        .preview-title h2 {
             font-size: 1.6rem;
             color: var(--dark-gray);
             font-weight: 400;
         }
         
-        .readme-header i {
+        .preview-title i {
             margin-right: 12px;
             font-size: 1.4rem;
             color: var(--text-light);
         }
         
-        .readme-content {
-            padding: 20px;
+        .back-to-readme {
+            padding: 8px 15px;
             background: var(--light-gray);
+            border: 1px solid var(--border-gray);
+            border-radius: 4px;
+            color: var(--link-gray);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .back-to-readme:hover {
+            background: var(--table-header);
+            color: var(--link-hover);
+        }
+        
+        .preview-content {
+            padding: 20px;
+            background: var(--preview-bg);
             border-radius: 6px;
             line-height: 1.8;
             color: var(--text-gray);
             border: 1px solid var(--border-gray);
+            max-height: 500px;
+            overflow-y: auto;
         }
         
-        .readme-content h3 {
+        .preview-content h3 {
             color: var(--dark-gray);
             margin: 20px 0 10px;
             font-weight: 500;
         }
         
-        .readme-content p {
+        .preview-content p {
             margin-bottom: 15px;
         }
         
-        .readme-content code {
+        .preview-content code {
             background: var(--table-row);
             padding: 2px 6px;
             border-radius: 4px;
@@ -379,7 +427,7 @@
             color: var(--dark-gray);
         }
         
-        .readme-content pre {
+        .preview-content pre {
             background: var(--dark-gray);
             color: var(--light-gray);
             padding: 15px;
@@ -439,6 +487,16 @@
             
             .article-item h3 {
                 font-size: 1rem;
+            }
+            
+            .preview-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .back-to-readme {
+                align-self: flex-end;
             }
         }
         
@@ -500,12 +558,18 @@
             <p>面朝大海，春暖花開</p>
         </header>
         
-        <!-- 左侧文章区域 -->
+        <!-- 左侧稿件区域 -->
         <aside class="articles-section">
-            <h2><i class="fas fa-newspaper"></i> 最新稿件</h2>
+            <h2><i class="fas fa-file-alt"></i> 稿件列表</h2>
+            
+            <div class="article-search">
+                <i class="fas fa-search"></i>
+                <input type="text" id="article-search-input" placeholder="搜索稿件...">
+            </div>
+            
             <div class="article-list" id="article-list">
                 <div class="article-item">
-                    <i class="fas fa-spinner fa-spin"></i> 加載稿件列表
+                    <i class="fas fa-spinner fa-spin"></i> 加載稿件列表...
                 </div>
             </div>
         </aside>
@@ -517,7 +581,7 @@
                 <div class="controls">
                     <div class="search-box">
                         <i class="fas fa-search"></i>
-                        <input type="text" id="search-input" placeholder="搜索文件...">
+                        <input type="text" id="file-search-input" placeholder="搜索文件...">
                     </div>
                 </div>
             </div>
@@ -552,14 +616,19 @@
                 </table>
             </div>
             
-            <!-- README 显示区域 -->
-            <div class="readme-section">
-                <div class="readme-header">
-                    <i class="fab fa-readme"></i>
-                    <h2>README.md</h2>
+            <!-- 预览显示区域 -->
+            <div class="preview-section">
+                <div class="preview-header">
+                    <div class="preview-title">
+                        <i class="fab fa-readme"></i>
+                        <h2 id="preview-header-title">README.md</h2>
+                    </div>
+                    <button class="back-to-readme" id="back-to-readme">
+                        <i class="fas fa-book"></i> 返回README.md
+                    </button>
                 </div>
-                <div class="readme-content" id="readme-content">
-                    <p>正在加載 README.md 内容...</p>
+                <div class="preview-content" id="preview-content">
+                    <p>正在加載内容...</p>
                 </div>
             </div>
         </main>
@@ -617,6 +686,8 @@
 
         // 当前目录状态
         let currentDirectory = 'assets';
+        let currentPreview = 'readme'; // 'readme' 或 'article'
+        let currentArticle = null;
         
         // 获取文件类型信息
         function getFileTypeInfo(filename, isDirectory = false) {
@@ -659,7 +730,7 @@
                 backRow.innerHTML = `
                     <td class="file-icon-cell"><i class="fas fa-level-up-alt"></i></td>
                     <td class="file-name" colspan="4">
-                        <a href="#" id="back-link">返回上级目录</a>
+                        <a href="#" id="back-link">返回上級目錄</a>
                     </td>
                 `;
                 tbody.appendChild(backRow);
@@ -676,7 +747,7 @@
                 row.innerHTML = `
                     <td colspan="5" style="text-align: center; padding: 30px; color: var(--text-light);">
                         <i class="fas fa-folder-open"></i>
-                        <p>该目录下没有文件</p>
+                        <p>該目錄下沒有文件</p>
                     </td>
                 `;
                 tbody.appendChild(row);
@@ -692,12 +763,12 @@
                 row.innerHTML = `
                     <td class="file-icon-cell"><i class="${fileType.icon}"></i></td>
                     <td class="file-name">${file.name}</td>
-                    <td class="file-size">${isDirectory ? '目录' : formatFileSize(file.size)}</td>
+                    <td class="file-size">${isDirectory ? '目錄' : formatFileSize(file.size)}</td>
                     <td class="file-date">${isDirectory ? '-' : formatDate(file.date)}</td>
                     <td class="file-action">
                         ${isDirectory ? 
-                            '<a href="#" class="open-dir">打开</a>' : 
-                            '<a href="#" class="download-file">下载</a>'}
+                            '<a href="#" class="open-dir">打開</a>' : 
+                            '<a href="#" class="download-file">下載</a>'}
                     </td>
                 `;
                 
@@ -755,7 +826,7 @@
                     <td colspan="5" style="text-align: center; padding: 30px;">
                         <div class="loading">
                             <i class="fas fa-spinner"></i>
-                            <p>正在加载文件列表...</p>
+                            <p>正在加載文件列表...</p>
                         </div>
                     </td>
                 </tr>
@@ -791,19 +862,19 @@
                 renderFileList(files);
                 
             } catch (error) {
-                console.error('加载文件时出错:', error);
+                console.error('加載文件時出錯:', error);
                 document.getElementById('file-table-body').innerHTML = `
                     <tr>
                         <td colspan="5" style="text-align: center; padding: 30px; color: var(--dark-gray);">
                             <i class="fas fa-exclamation-triangle"></i>
-                            <p>无法加载文件列表: ${error.message}</p>
+                            <p>無法加載文件列表: ${error.message}</p>
                         </td>
                     </tr>
                 `;
             }
         }
 
-        // 获取文章列表
+        // 获取稿件列表
         async function fetchArticles() {
             const articleList = document.getElementById('article-list');
             articleList.innerHTML = `
@@ -825,41 +896,45 @@
                 
                 const data = await response.json();
                 
-                // 只取前5篇文章
-                const articles = data.slice(0, 5);
+                // 只取.md文件
+                const articles = data.filter(item => item.name.endsWith('.md'));
                 
                 // 清空文章列表
                 articleList.innerHTML = '';
                 
-                // 渲染文章列表
-                articles.forEach(async (article) => {
-                    if (article.name.endsWith('.md')) {
-                        // 获取文章内容
-                        const contentResponse = await fetch(article.download_url);
-                        const content = await contentResponse.text();
+                // 渲染稿件列表
+                articles.forEach((article) => {
+                    // 提取日期（假设文件名中有日期）
+                    const dateMatch = article.name.match(/(\d{4}-\d{2}-\d{2})/);
+                    const date = dateMatch ? dateMatch[1] : '';
+                    
+                    // 创建稿件项
+                    const articleItem = document.createElement('div');
+                    articleItem.className = 'article-item';
+                    articleItem.dataset.path = article.path;
+                    articleItem.innerHTML = `
+                        <h3>${article.name.replace('.md', '')}</h3>
+                        <div class="article-meta">
+                            <span>${date}</span>
+                            <span>${formatFileSize(article.size)}</span>
+                        </div>
+                    `;
+                    
+                    // 添加点击事件
+                    articleItem.addEventListener('click', async () => {
+                        // 移除其他活动状态
+                        document.querySelectorAll('.article-item').forEach(item => {
+                            item.classList.remove('active');
+                        });
                         
-                        // 从Markdown中提取标题
-                        const titleMatch = content.match(/title:\s*["']?(.*?)["']?\s*[\r\n]/i);
-                        const title = titleMatch ? titleMatch[1] : article.name.replace('.md', '');
+                        // 设置当前活动状态
+                        articleItem.classList.add('active');
                         
-                        // 提取日期（假设文件名中有日期）
-                        const dateMatch = article.name.match(/(\d{4}-\d{2}-\d{2})/);
-                        const date = dateMatch ? dateMatch[1] : '';
-                        
-                        // 创建文章项
-                        const articleItem = document.createElement('div');
-                        articleItem.className = 'article-item';
-                        articleItem.innerHTML = `
-                            <a href="https://worrizit.github.io/${article.path.replace('.md', '')}" target="_blank">
-                                <h3>${title}</h3>
-                                <div class="article-meta">
-                                    <span>${date}</span>
-                                    <span>${formatFileSize(article.size)}</span>
-                                </div>
-                            </a>
-                        `;
-                        articleList.appendChild(articleItem);
-                    }
+                        // 加载文章内容
+                        await loadArticleContent(article);
+                    });
+                    
+                    articleList.appendChild(articleItem);
                 });
                 
             } catch (error) {
@@ -873,10 +948,42 @@
             }
         }
 
+        // 加载文章内容
+        async function loadArticleContent(article) {
+            const previewContent = document.getElementById('preview-content');
+            previewContent.innerHTML = '<p><i class="fas fa-spinner fa-spin"></i> 正在加載文章内容...</p>';
+            
+            try {
+                // 获取文章内容
+                const contentResponse = await fetch(article.download_url);
+                const content = await contentResponse.text();
+                
+                // 使用Marked.js渲染Markdown
+                previewContent.innerHTML = marked.parse(content);
+                
+                // 更新预览标题
+                document.getElementById('preview-header-title').textContent = article.name;
+                currentPreview = 'article';
+                currentArticle = article;
+                
+                // 显示返回按钮
+                document.getElementById('back-to-readme').style.display = 'block';
+                
+            } catch (error) {
+                console.error('加載文章内容時出錯:', error);
+                previewContent.innerHTML = `
+                    <div class="error-message">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>無法加載文章内容: ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
         // 获取并渲染README.md
         async function fetchReadme() {
-            const readmeContent = document.getElementById('readme-content');
-            readmeContent.innerHTML = '<p><i class="fas fa-spinner fa-spin"></i> 正在加載README.md...</p>';
+            const previewContent = document.getElementById('preview-content');
+            previewContent.innerHTML = '<p><i class="fas fa-spinner fa-spin"></i> 正在加載README.md...</p>';
             
             try {
                 // GitHub API URL
@@ -896,11 +1003,18 @@
                 const readmeText = await readmeResponse.text();
                 
                 // 使用Marked.js渲染Markdown
-                readmeContent.innerHTML = marked.parse(readmeText);
+                previewContent.innerHTML = marked.parse(readmeText);
+                
+                // 更新预览标题
+                document.getElementById('preview-header-title').textContent = 'README.md';
+                currentPreview = 'readme';
+                
+                // 隐藏返回按钮
+                document.getElementById('back-to-readme').style.display = 'none';
                 
             } catch (error) {
                 console.error('加載README時出錯:', error);
-                readmeContent.innerHTML = `
+                previewContent.innerHTML = `
                     <div class="error-message">
                         <i class="fas fa-exclamation-triangle"></i>
                         <p>無法加載README.md: ${error.message}</p>
@@ -914,7 +1028,7 @@
             // 初始化获取文件列表（assets目录）
             fetchRepoContents();
             
-            // 获取文章列表
+            // 获取稿件列表
             fetchArticles();
             
             // 获取README.md
@@ -927,9 +1041,9 @@
                 fetchRepoContents();
             });
             
-            // 搜索功能
-            const searchInput = document.getElementById('search-input');
-            searchInput.addEventListener('input', function() {
+            // 文件搜索功能
+            const fileSearchInput = document.getElementById('file-search-input');
+            fileSearchInput.addEventListener('input', function() {
                 const query = this.value.toLowerCase();
                 const rows = document.querySelectorAll('#file-table-body tr');
                 
@@ -942,6 +1056,33 @@
                             row.style.display = 'none';
                         }
                     }
+                });
+            });
+            
+            // 稿件搜索功能
+            const articleSearchInput = document.getElementById('article-search-input');
+            articleSearchInput.addEventListener('input', function() {
+                const query = this.value.toLowerCase();
+                const articles = document.querySelectorAll('.article-item');
+                
+                articles.forEach(article => {
+                    const title = article.querySelector('h3').textContent.toLowerCase();
+                    if (title.includes(query)) {
+                        article.style.display = 'block';
+                    } else {
+                        article.style.display = 'none';
+                    }
+                });
+            });
+            
+            // 返回README按钮事件
+            document.getElementById('back-to-readme').addEventListener('click', (e) => {
+                e.preventDefault();
+                fetchReadme();
+                
+                // 移除稿件选中状态
+                document.querySelectorAll('.article-item').forEach(item => {
+                    item.classList.remove('active');
                 });
             });
         });
