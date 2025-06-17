@@ -31,16 +31,16 @@ Worrizit = worry(en) + ずっと(jp) = 常憂
 * **明日方舟**  
   [PRTS](https://prts.wiki/w/%E9%A6%96%E9%A1%B5)  
   [企鵝物流數據統計](https://penguin-stats.io/)  
-* **資源頁**  
-  [Freemdict](https://downloads.freemdict.com/uploads/)
+* **資源頁**   
+  [Freemdict](https://downloads.freemdict.com/uploads/)   
   
-## **Changelog**
-**2022年**
-網站重寫建立
-**2025/6/16**
-重寫*index.html*
-**2025/6/17**
-刪除*_config.yml*
+## **Changelog**   
+**2022年**   
+網站重寫建立   
+**2025/6/16**   
+重寫*index.html*   
+**2025/6/17**   
+刪除*_config.yml*   
 
 
 
